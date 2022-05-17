@@ -1,0 +1,2 @@
+Welcome, Friend!
+The server admin can edit this message by editting the file "motd.txt".

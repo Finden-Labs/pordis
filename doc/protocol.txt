@@ -1,0 +1,47 @@
+Handshake
+---------
+1. Client connects.
+2. Server accepts connection.
+3. Server sends public key.
+4. Client sends public key.
+5. Client sends encrypted shared secret half.
+6. Server sends encrypted shared secret half.
+7. Client requests enabling encryption.
+8. Server requests enabling encryption.
+9. Client sends username.
+10. Server sends user ID to client.
+11. Server sends motd to client.
+12. Server broadcasts the new arrival to the chat.
+12. Server broadcasts the user list.
+
+How does the encryption work?
+-----------------------------
+Asymmetric encryption is used to construct a shared secret from two
+halves, never sent in plaintext. This shared secret is used as a key
+for AES CBC 128 symmetric encryption of the rest of the communication.
+
+Symmetric encryption details depend on from cryptography.fernet.Fernet,
+so they might change in the future.
+
+Handshake messages have this structure:
+[total length int32][command length int32][command][payload length int32][payload]
+
+Encrypted messages have this structure:
+[total length int32] + encrypted([command length int32][command][payload length int32][payload])
+
+Al integers are little endian.
+
+Client-initiated commands
+-------------------------
+storekey <client public key>
+storesecret <encrypted client secret>
+enableencryption
+user <username>
+chat <text>
+
+Server-initiated commands
+-------------------------
+storekey <server public key>
+storesecret <encrypted server secret>
+chat <text>
+userlist <line break separated user names>

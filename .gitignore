@@ -1,0 +1,8 @@
+**/__pycache__
+keys/*
+**/*.pyc
+.DS_Store
+conf/bookmarks.ini
+conf/client_configuration.ini
+conf/server_configuration.ini
+scratch.txt

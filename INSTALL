@@ -1,0 +1,30 @@
+You should make sure the tkinter Python module is installed.
+This module is not installed through pip.
+
+Windows
+=======
+When you install Python using the official installer,
+make sure to check the option to install Tcl/Tk with IDLE.
+
+macOS (https://brew.sh/)
+========================
+brew install python-tk@3.10
+(or whatever Python version you have)
+
+Alternatively install the offical binaries: https://www.python.org/downloads/
+As with Windows, they should come with Tcl/Tk.
+
+Ubuntu/Debian
+=============
+sudo apt-get install python3-tk
+or
+sudo apt-get install python3.10-tk
+(or whatever Python version you have)
+
+Fedora
+======
+sudo dnf install python3-tkinter
+
+CentOS
+======
+sudo yum install python3-tkinter
