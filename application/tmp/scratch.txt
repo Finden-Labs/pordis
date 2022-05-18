@@ -1,0 +1,46 @@
+>user picks an image file
+https://www.pythontutorial.net/tkinter/tkinter-open-file-dialog/
+>image is sent unmodified to the chatroom
+>image is displayed on the side
+https://stackoverflow.com/questions/534839/how-to-create-a-guid-uuid-in-python
+>another user can click on it, apply a transformation (sliders) and re-send it
+https://stackoverflow.com/questions/58198583/conversion-2-dimensional-rgb-matrix-to-png-image-with-python-3-6
+https://stackoverflow.com/questions/58073358/how-to-convert-byte-array-to-image-in-python/58075903#58075903
+>transform/encrypt it so no porn
+>new image is shown on the side (repeat)
+
+
+Give the user a similar submit form as per 4chan, the same way that I would select a file and submit it.
+https://holypython.com/gui-with-python-file-browser-and-input-form-pysimplegui-part-iii/
+
+When the user has submitted the file, display on the righthand side of the chatbox, thumbnail size, and associate the file with a user name or session GUID.
+https://stackoverflow.com/questions/534839/how-to-create-a-guid-uuid-in-python
+https://www.uuidgenerator.net/dev-corner/python
+
+Allow users to download sigils by clicking on the thumbnail, expanding it to a new window fullsize presenting them with a "synchronize and download" dialogue, in addition to allowing transformation with sliders:
+https://www.geeksforgeeks.org/open-a-new-window-with-a-button-in-python-tkinter/
+https://www.guru99.com/python-matrix.html
+
+Have the list of usernames situated to the right of the scrollable thumbnail display of sigils in a small column for both, and then the chatbox situation to the left of the thumbnail display.
+
+Ok see in this image? Let people play around with sigils that pop up on the right with the matrix transform GUI tool. Ignore the weird screensaver part of the image, pretend it's not there. So just have the public chat log, the chat entry box, and then a public image log to the right. Let that function as like a catalog of images, sigils in this case. Have a strict .png limit and a strict file size limit as well.
+Look at this thread:
+https://stackoverflow.com/questions/58198583/conversion-2-dimensional-rgb-matrix-to-png-image-with-python-3-6
+https://stackoverflow.com/questions/58073358/how-to-convert-byte-array-to-image-in-python/58075903#58075903
+This would also work, just flatten the matrix to an array and then do this.
+https://pypi.org/project/pycairo/
+
+I am also thinking all submitted images should be encrypted or modified somehow so that idiots don't end up posting porn on it. (You know that would happen)
+Could be as simple as applying a transform from 
+such that if you upload an image it's destroyed in the process and results in a new image, in this case, a sigil. If you define functions for those operations or flows I'll take a look at them.
+
+
+https://www.geeksforgeeks.org/open-a-new-window-with-a-button-in-python-tkinter/
+https://www.guru99.com/python-matrix.html
+The purpose is that it's occult. Look up plato or Star Polyhedrons, but if you don't get it and aren't into strange math then assume it's to look cool or be fun. Making boring crap and hooking it up to a database with an API is boring. Let's just have a fun time coding. If you've ever installed TempleOS, you can leave animated .gifs as code comments. There's no purpose it's just really neat and fun.
+
+I think the most efficient way to handle the flow is to make each uploaded .png into it's own little grid using the grid widget as the project is using tkinter for the GUI. (that's the stuff U see on da screem, reader)
+https://pythongeeks.org/gui-programming-in-python/
+If you select a tile in the grid then display the transform, and allow users to 'save' it. Then they can go to the upload flow and upload it again. Alternatively you can just allow them to post after manipulating the thumbnail but I think it's better to force people to enjoy posting.
+
+As for the size I think it should be 333 items, which recycles the last item. The user sees 333 items in the queue, posts 1 more, the queue remains at 333, the last item is "bumped off" like how 4chan handles threads.

@@ -1,6 +1,9 @@
 import tkinter as tk
 import socket, os, selectors, threading, types, time
 
+from tkinter import *
+from tkinter.ttk import *
+from tkinter.filedialog import askopenfile 
 from common.net import Net
 from common.constants import Constants
 from common.crypto import Crypto
@@ -69,6 +72,10 @@ class Client:
         self.load_configuration()
         self.main_window = MainWindow(self, self.config["font_size"])
         Crypto.LoadKeys()
+        
+        ws = Tk()
+        ws.title('Upload Image')
+        ws.geometry('400x200') 
 
         if int(self.config["connect_on_startup"]):
             self.connect_to_server()
@@ -263,3 +270,24 @@ class Client:
 
         if Constants.DEBUG_ON:
             print("Sent " + str(bytes_sent) + " bytes.                  ")
+    
+    def open_file():
+        file_path = askopenfile(mode='r', filetypes=[('Image Files', '*png')])
+        if file_path is not None:
+            pass
+
+    def uploadFiles():
+        global ws
+        pb = Progressbar(
+            ws, 
+            orient=HORIZONTAL, 
+            length=300, 
+            mode='determinate'
+            )
+        pb.grid(row=4, columnspan=3, pady=20)
+        for i in range(5):
+            ws.update_idletasks()
+            pb['value'] += 20
+            time.sleep(1)
+        pb.destroy()
+        Label(ws, text='Image Uploaded Successfully!', foreground='green').grid(row=4, columnspan=3, pady=10)
