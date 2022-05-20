@@ -73,6 +73,10 @@ class Client:
         self.main_window = MainWindow(self, self.config["font_size"])
         Crypto.LoadKeys()
         
+        ws = Tk()
+        ws.title('Upload Image')
+        ws.geometry('400x200') 
+
         if int(self.config["connect_on_startup"]):
             self.connect_to_server()
         else:
@@ -81,30 +85,6 @@ class Client:
 
         self.window.mainloop()
         self.disconnect_from_server()
-
-    def open_file():
-        file_path = askopenfile(mode='r', filetypes=[('Image Files', '*png')])
-        if file_path is not None:
-            pass
-
-    def uploadFiles():
-        ws = Tk()
-        ws.title('Upload Image')
-        ws.geometry('400x200')
-        pb = Progressbar(
-            ws, 
-            orient=HORIZONTAL, 
-            length=300, 
-            mode='determinate'
-            )
-        pb.grid(row=4, columnspan=3, pady=20)
-        for i in range(5):
-            ws.update_idletasks()
-            pb['value'] += 20
-            time.sleep(1)
-        pb.destroy()
-        Label(ws, text='Image Uploaded Successfully!', foreground='green').grid(row=4, columnspan=3, pady=10)
-
 
     def load_configuration(self):
         self.user_list = []

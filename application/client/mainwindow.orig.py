@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
-from tkinter import filedialog as fd
-from tkinter.messagebox import showinfo
 
 from datetime import datetime
 
@@ -28,28 +26,7 @@ class MainWindow():
         self.chat_input.grid(column=0, row=1, pady=5, padx=5, sticky="SEW")
         self.chat_input.bind("<KeyPress>", self.on_input_enter)
         self.chat_input.focus()
-
-        self.chat_input.grid(column=1, row=1, pady=5, padx=5, sticky="SW")
     
-        def select_file():
-            filename = fd.askopenfilename(
-                title='Open Image',
-                initialdir='/',
-                filetypes=[('image files', '.png')])
-
-            showinfo(
-                title='Selected Image',
-                message=filename
-            )
-
-        self.chat_input.open_button = ttk.Button(
-            self.chat_input,
-            text='File',
-            command=select_file
-        )
-
-        self.chat_input.open_button.pack(expand=True)
-
     def append_to_chat_log(self, text: bytes, system_message=False, timestamp=True):
         self.chat_log.config(state="normal")
         self.chat_log.insert("end", (b"[" + datetime.now().strftime("%d/%m %H:%M:%S").encode("utf-8") + b"] " if timestamp else b"") + (b"*** " + text + b" ***" if system_message else text) + b"\n")
