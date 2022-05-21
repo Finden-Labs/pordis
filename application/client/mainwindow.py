@@ -10,15 +10,17 @@ class MainWindow():
     def __init__(self, client, font_size):
         self.client = client
 
-        client.window.columnconfigure(0, weight=3)
-        client.window.columnconfigure(1, weight=1)
+        client.window.columnconfigure(0, weight=3) # main window
+        client.window.columnconfigure(1, weight=1) # sidebar
 
         left_frame = ttk.Frame(client.window)
         left_frame.grid(column=0, row=0, sticky="NSEW")
-        left_frame.rowconfigure(0, weight=5)
-        left_frame.rowconfigure(1, weight=1)
+        left_frame.rowconfigure(0, weight=5) # chat window
+        left_frame.rowconfigure(1, weight=1) # chat input box (?)
+        # left_frame.columnconfigure(0, weight=4)
+        # left_frame.columnconfigure(1, weight=1)
 
-        self.user_list = tk.Listbox(client.window)
+        self.user_list = tk.Listbox(client.window) # right sidebar
         self.user_list.grid(column=1, row=0, sticky="NSEW", padx=5, pady=5)
 
         self.chat_log = ScrolledText(left_frame, state="disabled", font="Courier " + font_size)
@@ -28,8 +30,6 @@ class MainWindow():
         self.chat_input.grid(column=0, row=1, pady=5, padx=5, sticky="SEW")
         self.chat_input.bind("<KeyPress>", self.on_input_enter)
         self.chat_input.focus()
-
-        self.chat_input.grid(column=1, row=1, pady=5, padx=5, sticky="SW")
     
         def select_file():
             filename = fd.askopenfilename(
@@ -42,13 +42,14 @@ class MainWindow():
                 message=filename
             )
 
-        self.chat_input.open_button = ttk.Button(
+        self.file_button = ttk.Button(
             self.chat_input,
             text='File',
             command=select_file
         )
 
-        self.chat_input.open_button.pack(expand=True)
+        self.file_button.grid(column=1, row=0, pady=0, padx=0, sticky="SE")
+        self.file_button.pack(expand=True)
 
     def append_to_chat_log(self, text: bytes, system_message=False, timestamp=True):
         self.chat_log.config(state="normal")
