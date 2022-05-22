@@ -1,21 +1,29 @@
 import socket, threading
 from socket import *
-from common.files import Files
+# from common.files import Files
 
-class NetworkingThread(threading.Thread):
-    def __init__(self, client):
-        super().__init__()
-        self.client = client
+class UDPClient:
+    def __init__(self):
+        self.networking_thread = None
+        self.stop_networking_thread = False
+        self.last_send = 0
+        #self.load_configuration()
+
+    def load_configuration(self):
+        # self.config = Files.ReadIniFile("conf/udp_client_configuration.ini")
+        exit
     
     # read config files, connect to server
-    def run(self):
+    def start(self):
         s = socket(AF_INET,SOCK_DGRAM)
-        host = self.config.server_address
-        port = self.config.server_port
+        #host = self.config.server_address
+        # port = self.config.server_port
+        host = "0.0.0.0"
+        port = 61123
         buf = 1024
         addr = (host,port)
 
-        file_name=b'main.py' # get filename from client.py
+        file_name=b'hello_world.txt' # get filename from client.py
         s.sendto(file_name,addr)
 
         f=open(file_name,"rb")
@@ -28,16 +36,5 @@ class NetworkingThread(threading.Thread):
         f.close()
         print("Successfully sent file")
 
-class UDPClient:
-    def __init__(self):
-        self.networking_thread = None
-        self.stop_networking_thread = False
-        self.last_send = 0
-        self.load_configuration()
-
-    def load_configuration(self):
-        self.config = Files.ReadIniFile("conf/udp_client_configuration.ini")
-
-
-
-
+client = UDPClient()
+client.start()

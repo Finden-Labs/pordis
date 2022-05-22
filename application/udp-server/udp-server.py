@@ -24,16 +24,23 @@ class UDPServer():
             buf = 1024
             s.bind(addr)
 
+            
+
             self.log("Server now listening. Press CTRL+BREAK to interrupt.")
             try:
-                while not self.done:
-                    time.sleep(0.01)
-                    data = s.recvfrom(buf)
-                    msg = data[0]
-                    client_src = data[1] 
+                data,client_src = s.recvfrom(buf) # file name
+                while (data):
+                    print(data)
+                    f = open("hello_world.txt", 'ab')
                     self.log("File Downloaded; God is GREAT!")
+                    # s.settimeout(2) # turn off for dev
+                    data,client_src = s.recvfrom(buf)
+                    f.write(data)
             except KeyboardInterrupt:
                 self.done = True
+                f.close()
+                s.close()
+            f.close()
 
     def load_configuration(self):
         self.config = Files.ReadIniFile("conf/udp_server_configuration.ini") # fix
