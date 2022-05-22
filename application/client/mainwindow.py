@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
 from tkinter import filedialog as fd
-from tkinter.messagebox import showinfo
 
 from datetime import datetime
+import time
 
 class MainWindow():
     def __init__(self, client, font_size):
@@ -32,15 +32,32 @@ class MainWindow():
         self.chat_input.focus()
     
         def select_file():
-            filename = fd.askopenfilename(
+            file = fd.askopenfile(
                 title='Open Image',
-                initialdir='/',
-                filetypes=[('image files', '.png')])
-
-            showinfo(
-                title='Selected Image',
-                message=filename
+                initialdir='/tmp',
+                filetypes=[('image files', '.png')],
+                mode='r'
             )
+            if file is not None:
+                # content = file.read()
+                # print(content)
+                ws = tk.Toplevel()
+                ws.title('Upload Image')
+                ws.geometry('400x200')
+                pb = ttk.Progressbar(
+                    ws, 
+                    orient='horizontal', 
+                    length=300, 
+                    mode='determinate'
+                    )
+                pb.grid(row=4, columnspan=3, pady=20)
+                for i in range(5):
+                    ws.update_idletasks()
+                    pb['value'] += 20
+                    # SEND BINARY FILE!
+                    time.sleep(1)
+                pb.destroy()
+                tk.Label(ws, text='Image Uploaded Successfully!', foreground='green').grid(row=4, columnspan=3, pady=10)
 
         self.file_button = ttk.Button(
             self.chat_input,
