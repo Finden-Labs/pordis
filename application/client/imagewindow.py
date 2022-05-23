@@ -1,4 +1,5 @@
 import tkinter as tk
+from snip_engine import SnippetEngine
 from tkinter import ttk
 from PIL import ImageTk, Image  
 from tkinter.messagebox import showinfo
@@ -6,7 +7,6 @@ from tkinter.messagebox import showinfo
 root = tk.Tk()  
 root.title('Go Crazy!')
 frame = tk.Frame(root)
-
 
 frame.grid(row = 0, column = 0, sticky="NSEW")
 canvas = tk.Canvas(frame, width=600, height=600)  
@@ -27,6 +27,8 @@ button = tk.Button(frame, text = "Apply", command = set,
                 fg = "red",
                 bd = 2, bg = "light blue", relief = "groove")
 button.pack(pady = 5)
+
+get_snippet_list()
 
 def apply_snippet(event):
     showinfo(
