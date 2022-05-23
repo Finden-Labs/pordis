@@ -6,3 +6,4 @@ conf/bookmarks.ini
 conf/client_configuration.ini
 conf/server_configuration.ini
 tmp/*
+_build/

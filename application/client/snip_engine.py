@@ -1,7 +1,8 @@
 from __future__ import print_function
-import os, sys, cairo
+import os, sys, cairo, random
 from PIL import ImageTk, Image
 from snippets import get_snippets, Snippet
+from datetime import datetime
 
 class SnippetEngine():
     def do_snippet(self, snippet):
@@ -19,9 +20,12 @@ class SnippetEngine():
             os.makedirs(os.path.join("_build", "png"))
         except EnvironmentError:
             pass
-        filename = os.path.join("_build", "png", "%s.png" % snippet.name)
-
+        
+        random.seed(datetime.now())
+        id = str(int(random.randint(1, 9999999999999999))) + snippet.name
+        filename = os.path.join("_build", "png", "%s.png" % id)
         surface.write_to_png(filename)
+        return id
 
     if __name__ == '__main__':
         if not(cairo.HAS_IMAGE_SURFACE and cairo.HAS_PNG_FUNCTIONS):

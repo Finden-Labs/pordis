@@ -1,18 +1,21 @@
 import tkinter as tk
+import os
 from snip_engine import SnippetEngine
 from snippets import get_snippets
 from tkinter import ttk
 from PIL import ImageTk, Image  
 from tkinter.messagebox import showinfo
+from tkinter.filedialog import asksaveasfile
 
 root = tk.Tk()  
 root.title('Go Crazy!')
 frame = tk.Frame(root)
+img_id = None
 
 frame.grid(row = 0, column = 0, sticky="NSEW")
 canvas = tk.Canvas(frame, width=600, height=600)  
 canvas.pack()  
-img = ImageTk.PhotoImage(Image.open("/home/sba/projects/pordis/_build/png/optical_illusion.png"))  
+img = ImageTk.PhotoImage(Image.open("/home/sba/projects/pordis/application/client/ball.png"))  
 canvas.create_image(300, 300, image=img)  # x,y should be a ratio of canvas width/height
 
 frame.grid(row = 1, column = 0,sticky = "NESW")
@@ -29,25 +32,35 @@ picklist.set("Filter")
 picklist.pack(padx = 5, pady = 5)
 
 frame.grid(row = 1, column = 1, sticky = "W")
-button = tk.Button(frame, text = "Apply", command = set,
-                fg = "red",
-                bd = 2, bg = "light blue", relief = "groove")
-button.pack(pady = 5)
+save_button = tk.Button(frame, text = "Save", command=lambda:save())
+save_button.pack(pady = 5)
 
-
+frame.grid(row = 1, column = 2, sticky = "W")
+send_button = tk.Button(frame, text = "Send to Chat", command=set)
+send_button.pack(pady = 5)
 
 def apply_snippet(event):
+    global img_id
     selected = event.widget.get()
     if selected != 'Filter':
         all_snips = get_snippets()
         selected_val = all_snips[selected]
-        snip.do_snippet(selected_val)
-        showinfo(
-            title='Result',
-            message=f'You selected {selected}!'
-        )
-# to do -- dont just make snippet, overlay it on original png
-# display to user
+        img_id = snip.do_snippet(selected_val)
+        filename = os.path.join("_build", "png", "%s.png" % img_id)
+        modified_img = ImageTk.PhotoImage(Image.open(filename))
+        modified_img_container = canvas.create_image(300, 300, image=modified_img)  # x,y should be a ratio of canvas width/height
+        canvas.itemconfig(modified_img_container, image=modified_img)
+        root.mainloop()
+        #showinfo(
+        #    title='Result',
+        #    message=f'You selected {selected}!'
+        #)
+def save():
+    global img_id
+    filename = os.path.join("%s.png" % img_id)
+    file_types = [('Image File', '*.png')]
+    asksaveasfile(filetypes =  file_types, defaultextension = file_types, initialfile=filename)
+    # root.mainloop()
 # allow user to save
 # allow user to send (auto saves serverside)
 picklist.bind('<<ComboboxSelected>>', apply_snippet)
