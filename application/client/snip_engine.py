@@ -1,27 +1,20 @@
 from __future__ import print_function
 import os, sys, cairo
-from snippets import get_snippets
+from PIL import ImageTk, Image
+from snippets import get_snippets, Snippet
 
 class SnippetEngine():
-    
-    def get_snippet_list():
-            print(get_snippets())
-
-    def do_snippet(snippet):
-        verbose_mode = True
-        if verbose_mode:
-            print('processing %s' % snippet.name)
-
+    def do_snippet(self, snippet):
         width, height = 256, 256
-
-        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+        surface = cairo.ImageSurface.create_from_png("/home/sba/projects/pordis/application/client/ball.png")
         cr = cairo.Context(surface)
 
         cr.save()
         snippet.draw_func(cr, width, height)
-
         cr.restore()
-
+        img = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+        cr.set_source_surface(img, 0, 0)
+        cr.paint()
         try:
             os.makedirs(os.path.join("_build", "png"))
         except EnvironmentError:
@@ -35,19 +28,14 @@ class SnippetEngine():
             raise SystemExit(
                 'cairo was not compiled with ImageSurface and PNG support')
 
-        verbose_mode = True
-        if len(sys.argv) > 1 and sys.argv[1] == '-s':
-            verbose_mode = False
-            del sys.argv[1]
+        #snippets = get_snippets()
 
-        snippets = get_snippets()
-
-        if len(sys.argv) > 1:
+        #if len(sys.argv) > 1:
             # do specified snippets
-            selected = [snippets[n] for n in sys.argv[1:]]
-        else:
+            #selected = [snippets[n] for n in sys.argv[1:]]
+        #else:
             # do all snippets
-            selected = snippets.values()
+            #selected = snippets.values()
 
-        for s in selected:
-            do_snippet(s)
+        #for s in selected:
+            #do_snippet(s)
